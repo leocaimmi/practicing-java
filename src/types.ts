@@ -76,7 +76,7 @@ export interface Answer {
 export interface SessionResult {
   id: string
   finishedAt: number
-  mode: 'unidad' | 'mixta' | 'examen'
+  mode: 'unidad' | 'mixta' | 'examen' | 'tipo'
   /** Unidades incluidas en la sesión. */
   unitIds: number[]
   total: number

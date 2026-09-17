@@ -8,14 +8,22 @@ export interface QuestionStat {
   correct: number
 }
 
+/** Estado de un desafío de código: el último borrador y si ya se resolvió. */
+export interface ChallengeState {
+  code: string
+  solved: boolean
+}
+
 export interface Progress {
   /** Estadísticas por id de pregunta. */
   stats: Record<string, QuestionStat>
   /** Últimas sesiones terminadas, de la más reciente a la más antigua. */
   history: SessionResult[]
+  /** Estado de los desafíos de código, por id. */
+  challenges: Record<string, ChallengeState>
 }
 
-const EMPTY: Progress = { stats: {}, history: [] }
+const EMPTY: Progress = { stats: {}, history: [], challenges: {} }
 
 const MAX_HISTORY = 30
 
@@ -32,6 +40,7 @@ export function loadProgress(): Progress {
     return {
       stats: parsed.stats ?? {},
       history: parsed.history ?? [],
+      challenges: parsed.challenges ?? {},
     }
   } catch {
     return EMPTY
@@ -68,7 +77,20 @@ export function resetProgress(): Progress {
   } catch {
     // Ídem: si no se puede borrar, no hay nada que informar.
   }
-  return { stats: {}, history: [] }
+  return { stats: {}, history: [], challenges: {} }
+}
+
+/** Guarda el borrador de un desafío y, si corresponde, lo marca resuelto. */
+export function saveChallenge(id: string, code: string, solved: boolean): Progress {
+  const progress = loadProgress()
+  const previous = progress.challenges[id]
+  progress.challenges[id] = {
+    code,
+    // Una vez resuelto, sigue resuelto aunque después se edite el código.
+    solved: solved || (previous?.solved ?? false),
+  }
+  saveProgress(progress)
+  return progress
 }
 
 /** Porcentaje de aciertos acumulado sobre las preguntas de una unidad. */

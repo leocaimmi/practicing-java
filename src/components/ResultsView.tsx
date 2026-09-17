@@ -40,13 +40,13 @@ export function ResultsView({ session, answers, title, onRetry, onHome }: Props)
   const wrongCount = answers.length - correct
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-8 pb-safe">
-      <p className="text-sm text-slate-500 dark:text-slate-400">{title}</p>
-      <h1 className="mt-1 text-2xl font-semibold">Resultado de la práctica</h1>
+    <div className="mx-auto w-full max-w-3xl px-4 py-10 pb-safe sm:px-6 sm:py-14">
+      <p className="text-[13px] font-semibold tracking-wide text-sky-600 uppercase dark:text-sky-400">{title}</p>
+      <h1 className="mt-2 text-3xl font-extrabold sm:text-4xl">Resultado de la práctica</h1>
 
-      <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+      <section className="surface mt-7 rounded-2xl p-6 sm:p-7">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <p className={`text-5xl font-semibold tabular-nums ${TONE_RING[tone]}`}>{pct}%</p>
+          <p className={`text-6xl font-extrabold tabular-nums ${TONE_RING[tone]}`}>{pct}%</p>
           <p className="text-lg text-slate-600 dark:text-slate-300">
             {correct} de {answers.length}
           </p>
@@ -80,14 +80,14 @@ export function ResultsView({ session, answers, title, onRetry, onHome }: Props)
         <button
           type="button"
           onClick={onRetry}
-          className="rounded-xl bg-sky-600 px-5 py-2.5 font-medium text-white transition-colors hover:bg-sky-500"
+          className="rounded-xl bg-sky-600 px-6 py-3 font-bold text-white transition-colors hover:bg-sky-500"
         >
           Practicar de nuevo
         </button>
         <button
           type="button"
           onClick={onHome}
-          className="rounded-xl border border-slate-300 px-5 py-2.5 font-medium transition-colors hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+          className="surface rounded-xl px-6 py-3 font-bold transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
         >
           Volver al inicio
         </button>
@@ -95,13 +95,13 @@ export function ResultsView({ session, answers, title, onRetry, onHome }: Props)
 
       <section className="mt-9">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-lg font-semibold">
+          <h2 className="text-xl font-bold">
             {showAll ? 'Todas las preguntas' : 'Para repasar'}
           </h2>
           <button
             type="button"
             onClick={() => setShowAll((v) => !v)}
-            className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm transition-colors hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+            className="surface rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
           >
             {showAll ? 'Ver sólo los errores' : 'Ver todas'}
           </button>
@@ -132,7 +132,7 @@ export function ResultsView({ session, answers, title, onRetry, onHome }: Props)
               return (
                 <li
                   key={question.id}
-                  className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                  className="surface rounded-xl p-4 sm:p-5"
                 >
                   <div className="flex items-start gap-2">
                     <span
@@ -140,7 +140,7 @@ export function ResultsView({ session, answers, title, onRetry, onHome }: Props)
                         answer.correct ? 'bg-emerald-500' : 'bg-rose-500'
                       }`}
                     />
-                    <p className="font-medium">{question.prompt}</p>
+                    <p className="font-semibold">{question.prompt}</p>
                   </div>
 
                   {question.type === 'code' && (

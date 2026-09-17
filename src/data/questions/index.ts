@@ -46,6 +46,10 @@ export function questionsByUnit(unitId: number): Question[] {
   return allQuestions.filter((q) => q.unitId === unitId)
 }
 
+export function questionsByType(type: QuestionType): Question[] {
+  return allQuestions.filter((q) => q.type === type)
+}
+
 export function questionsByUnits(unitIds: number[]): Question[] {
   const wanted = new Set(unitIds)
   return allQuestions.filter((q) => wanted.has(q.unitId))

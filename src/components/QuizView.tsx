@@ -91,7 +91,7 @@ export function QuizView({ session, title, subtitle, onFinish, onExit }: Props) 
   const progress = ((index + (answered ? 1 : 0)) / session.length) * 100
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col px-4 pb-safe">
+    <div className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col px-4 pb-safe sm:px-6">
       <div ref={topRef} className="scroll-mt-4" />
 
       <header className="sticky top-0 z-10 -mx-4 bg-slate-50/90 px-4 pt-4 pb-3 backdrop-blur dark:bg-slate-950/90">
@@ -99,12 +99,12 @@ export function QuizView({ session, title, subtitle, onFinish, onExit }: Props) 
           <button
             type="button"
             onClick={onExit}
-            className="rounded-lg px-2 py-1 text-sm text-slate-600 transition-colors hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800"
+            className="-ml-2 rounded-lg px-2.5 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800"
           >
             ← Salir
           </button>
           <div className="text-right">
-            <p className="text-sm font-medium">{title}</p>
+            <p className="text-sm font-bold">{title}</p>
             <p className="text-xs text-slate-500 dark:text-slate-400">{subtitle}</p>
           </div>
         </div>
@@ -112,11 +112,11 @@ export function QuizView({ session, title, subtitle, onFinish, onExit }: Props) 
         <div className="mt-3 flex items-center gap-3">
           <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
             <div
-              className="h-full rounded-full bg-sky-500 transition-[width] duration-300"
+              className="h-full rounded-full bg-sky-500 transition-[width] duration-300 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>
-          <p className="shrink-0 font-mono text-xs text-slate-500 tabular-nums dark:text-slate-400">
+          <p className="shrink-0 font-mono text-xs font-medium text-slate-500 tabular-nums dark:text-slate-400">
             {index + 1}/{session.length} · {correctSoFar} ✓
           </p>
         </div>
@@ -139,7 +139,7 @@ export function QuizView({ session, title, subtitle, onFinish, onExit }: Props) 
             type="button"
             disabled={!answered}
             onClick={advance}
-            className="ml-auto w-full rounded-xl bg-sky-600 px-5 py-2.5 font-medium text-white transition-colors hover:bg-sky-500 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 sm:w-auto dark:disabled:bg-slate-800 dark:disabled:text-slate-600"
+            className="ml-auto w-full rounded-xl bg-sky-600 px-6 py-3 font-bold text-white transition-colors hover:bg-sky-500 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 sm:w-auto dark:disabled:bg-slate-800 dark:disabled:text-slate-600"
           >
             {isLast ? 'Ver resultado' : 'Siguiente'}
           </button>
