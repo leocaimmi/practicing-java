@@ -1,8 +1,7 @@
-import { useCallback, useState } from 'react'
+import { lazy, Suspense, useCallback, useState } from 'react'
 import type { Answer, QuestionType, SessionResult } from './types'
 import { unitById, units } from './data/units'
 import { questionsByType, questionsByUnit, questionsByUnits } from './data/questions'
-import { challengeById } from './data/challenges'
 import { buildSession, type PreparedQuestion } from './lib/quiz'
 import {
   loadProgress,
@@ -14,11 +13,21 @@ import {
   type Progress,
   type Theme,
 } from './lib/storage'
-import { ChallengeListView } from './components/ChallengeListView'
-import { ChallengeView } from './components/ChallengeView'
 import { HomeView } from './components/HomeView'
 import { QuizView } from './components/QuizView'
 import { ResultsView } from './components/ResultsView'
+
+/*
+ * Los desafíos arrastran el intérprete de Java y su banco de ejercicios, que no
+ * hacen falta para practicar preguntas. Se cargan en un chunk aparte, sólo
+ * cuando alguien entra a esa sección.
+ */
+const ChallengeListView = lazy(() =>
+  import('./components/ChallengeListView').then((m) => ({ default: m.ChallengeListView })),
+)
+const ChallengeView = lazy(() =>
+  import('./components/ChallengeView').then((m) => ({ default: m.ChallengeView })),
+)
 
 const MIXED_SIZE = 15
 const PARCIAL_SIZE = 20
@@ -169,24 +178,24 @@ export default function App() {
 
   if (view.name === 'challenges') {
     return (
-      <ChallengeListView progress={progress} onOpen={openChallenge} onExit={goHome} />
+      <Suspense fallback={<Cargando />}>
+        <ChallengeListView progress={progress} onOpen={openChallenge} onExit={goHome} />
+      </Suspense>
     )
   }
 
   if (view.name === 'challenge') {
-    const challenge = challengeById.get(view.id)
-    if (!challenge) return null
-    const saved = progress.challenges[challenge.id]
-
     return (
-      <ChallengeView
-        key={challenge.id}
-        challenge={challenge}
-        initialCode={saved?.code || challenge.starterCode}
-        solved={saved?.solved ?? false}
-        onSaveCode={(code, solved) => setProgress(saveChallenge(challenge.id, code, solved))}
-        onExit={openChallenges}
-      />
+      <Suspense fallback={<Cargando />}>
+        <ChallengeView
+          key={view.id}
+          challengeId={view.id}
+          savedCode={progress.challenges[view.id]?.code}
+          solved={progress.challenges[view.id]?.solved ?? false}
+          onSaveCode={(code, solved) => setProgress(saveChallenge(view.id, code, solved))}
+          onExit={openChallenges}
+        />
+      </Suspense>
     )
   }
 
@@ -226,5 +235,13 @@ export default function App() {
       onStartParcial={startParcial}
       onReset={() => setProgress(resetProgress())}
     />
+  )
+}
+
+function Cargando() {
+  return (
+    <div className="mx-auto w-full max-w-5xl px-4 py-16 text-center">
+      <p className="text-sm text-slate-500 dark:text-slate-400">Cargando…</p>
+    </div>
   )
 }

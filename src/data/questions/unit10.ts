@@ -218,4 +218,218 @@ for (String n : nombres) {
     source: SOURCE,
     tags: ['ArrayList'],
   },
+  {
+    id: 'u10-q13',
+    unitId: 10,
+    type: 'mc',
+    difficulty: 'basico',
+    prompt: '¿Cuál de estos métodos NO pertenece a la interfaz Collection?',
+    options: [
+      'get(int índice)',
+      'add(E e)',
+      'contains(Object o)',
+      'isEmpty()',
+    ],
+    correctIndex: 0,
+    explanation:
+      'get(int índice) es propio de List, porque implica acceso posicional y no todas las colecciones lo tienen: un Set, por ejemplo, no admite acceso por índice. Los otros tres sí están entre los métodos de instancia que define Collection.',
+    source: SOURCE,
+    tags: ['Collection', 'List'],
+  },
+  {
+    id: 'u10-q14',
+    unitId: 10,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime?',
+    code: `LinkedList<String> cola = new LinkedList<>();
+cola.addLast("b");
+cola.addFirst("a");
+cola.addLast("c");
+System.out.println(cola);`,
+    options: ['[a, b, c]', '[b, a, c]', '[c, b, a]', '[a, c, b]'],
+    correctIndex: 0,
+    explanation:
+      'addFirst() agrega al principio accediendo directamente al inicio de la lista y addLast() al final. Después de las tres operaciones, "a" quedó adelante de "b", y "c" al final.',
+    source: SOURCE,
+    tags: ['LinkedList'],
+  },
+  {
+    id: 'u10-q15',
+    unitId: 10,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente código, que usa la lista como una cola FIFO. ¿Qué imprime?',
+    code: `Queue<String> fila = new LinkedList<>();
+fila.offer("primero");
+fila.offer("segundo");
+System.out.println(fila.peek());
+System.out.println(fila.poll());
+System.out.println(fila.size());`,
+    options: [
+      'primero, primero y luego 1',
+      'primero, segundo y luego 1',
+      'segundo, primero y luego 0',
+      'primero, primero y luego 2',
+    ],
+    correctIndex: 0,
+    explanation:
+      'offer() inserta al final. peek() retorna el primero SIN eliminarlo, así que muestra "primero" y la cola sigue con dos. poll() elimina y retorna el primero, con lo que vuelve a mostrar "primero" y quedan 1 elemento.',
+    source: SOURCE,
+    tags: ['Queue', 'FIFO'],
+  },
+  {
+    id: 'u10-q16',
+    unitId: 10,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente código, que usa la lista como una pila LIFO. ¿Qué imprime?',
+    code: `LinkedList<Integer> pila = new LinkedList<>();
+pila.push(1);
+pila.push(2);
+pila.push(3);
+System.out.println(pila.pop());
+System.out.println(pila.peek());`,
+    options: ['3 y luego 2', '1 y luego 2', '3 y luego 1', '1 y luego 3'],
+    correctIndex: 0,
+    explanation:
+      'push introduce un elemento en el tope de la pila, así que el 3 queda arriba. pop quita y retorna el del tope, es decir 3. peek retorna sin eliminar el nuevo tope, que pasó a ser el 2.',
+    source: SOURCE,
+    tags: ['Deque', 'LIFO'],
+  },
+  {
+    id: 'u10-q17',
+    unitId: 10,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt:
+      'Se necesita eliminar elementos de una lista mientras se la recorre. ¿Qué corresponde usar?',
+    options: [
+      'Un Iterator, que sí permite modificar el listado durante el recorrido.',
+      'Un for each, que es la forma moderna de recorrer.',
+      'Un for con índice, que evita el problema por completo.',
+      'No se puede eliminar de una lista bajo ninguna forma de recorrido.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo advierte expresamente: con un for each no se pueden agregar ni eliminar datos del listado mientras se lo recorre, aunque sí modificar internamente un elemento. Para modificar el listado hay que usar Iterator.',
+    source: SOURCE,
+    tags: ['Iterator', 'for each'],
+  },
+  {
+    id: 'u10-q18',
+    unitId: 10,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Qué devuelve el método indexOf(Object objeto) de una List cuando el objeto no está?',
+    options: ['-1', '0', 'null', 'Lanza IndexOutOfBoundsException'],
+    correctIndex: 0,
+    explanation:
+      'indexOf() devuelve el índice de la primera aparición del objeto especificado, o -1 si no está en la lista. lastIndexOf() hace lo mismo con la última aparición.',
+    source: SOURCE,
+    tags: ['List'],
+  },
+  {
+    id: 'u10-q19',
+    unitId: 10,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: '¿Qué devuelve subList(int inicio, int fin)?',
+    options: [
+      'Una vista de la sublista desde el índice de inicio inclusive hasta el de fin exclusive.',
+      'Una copia independiente de la lista original completa.',
+      'La cantidad de elementos que hay entre las dos posiciones.',
+      'Una nueva lista con los elementos que quedan fuera del rango.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo define así: devuelve una vista de sublista de la lista original, que abarca desde el índice de inicio (inclusive) hasta el índice de fin (exclusive). Es la misma convención que substring() en String.',
+    source: SOURCE,
+    tags: ['List'],
+  },
+  {
+    id: 'u10-q20',
+    unitId: 10,
+    type: 'vf',
+    difficulty: 'avanzado',
+    prompt: 'Los ArrayList están sincronizados, así que varios hilos pueden usarlos sin precauciones.',
+    answer: false,
+    explanation:
+      'Es una de las desventajas que marca el material: no están sincronizados. Si múltiples hilos acceden a un mismo ArrayList concurrentemente puede haber problemas de consistencia de datos, así que hay que controlar la concurrencia de acceso.',
+    source: SOURCE,
+    tags: ['ArrayList'],
+  },
+  {
+    id: 'u10-q21',
+    unitId: 10,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt:
+      'Si hay que agregar y eliminar elementos siempre al FINAL de la colección, ¿qué conviene y por qué?',
+    options: [
+      'ArrayList, porque se accede directamente a la posición y no hay que modificar enlaces entre nodos.',
+      'LinkedList, porque las altas y bajas siempre son más rápidas ahí.',
+      'Da exactamente lo mismo: las dos tienen el mismo costo en los extremos.',
+      'TreeSet, porque mantiene el orden sin costo adicional.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material matiza la regla general: si se agrega o elimina al final, es más rápido el ArrayList, porque accede directamente a la posición. La LinkedList gana cuando hay que insertar o borrar en el medio, aunque ahí también hay que iterar hasta la posición.',
+    source: SOURCE,
+    tags: ['ArrayList', 'LinkedList'],
+  },
+  {
+    id: 'u10-q22',
+    unitId: 10,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Qué hace el método estático Collections.reverse(List lista)?',
+    options: [
+      'Invierte el orden de los elementos de la lista.',
+      'Devuelve una copia invertida y deja intacta la original.',
+      'Ordena la lista de mayor a menor según el orden natural.',
+      'Invierte el signo de los elementos numéricos.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Está entre los métodos estáticos que enumera el material, junto con addAll, copy, frequency, max y min. Invierte el orden actual de la lista; no la ordena.',
+    source: SOURCE,
+    tags: ['Collections'],
+  },
+  {
+    id: 'u10-q23',
+    unitId: 10,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: '¿Qué requisito tienen los elementos para poder usar Collections.max(Collection c)?',
+    options: [
+      'Tienen que implementar Comparable.',
+      'Tienen que sobrescribir toString().',
+      'Tienen que estar ordenados de antemano.',
+      'Tienen que ser tipos primitivos.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo aclara junto al método: para max y min los elementos tienen que implementar Comparable, porque hace falta un orden para poder compararlos. Para frequency, en cambio, el objeto debe implementar equals().',
+    source: SOURCE,
+    tags: ['Collections', 'Comparable'],
+  },
+  {
+    id: 'u10-q24',
+    unitId: 10,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime?',
+    code: `List<String> l = new ArrayList<>();
+l.add("a");
+l.add("b");
+l.add(1, "x");
+System.out.println(l);`,
+    options: ['[a, x, b]', '[a, b, x]', '[x, a, b]', '[a, x]'],
+    correctIndex: 0,
+    explanation:
+      'add(int índice, E elemento) inserta en la posición indicada y desplaza hacia adelante los elementos existentes. La "x" entra en la posición 1 y la "b" pasa a la 2.',
+    source: SOURCE,
+    tags: ['List', 'ArrayList'],
+  },
 ]

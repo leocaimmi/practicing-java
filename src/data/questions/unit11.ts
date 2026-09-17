@@ -161,4 +161,151 @@ System.out.println(equipos.size());`,
     source: SOURCE,
     tags: ['TreeSet'],
   },
+  {
+    id: 'u11-q11',
+    unitId: 11,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime?',
+    code: `Set<String> s = new HashSet<>();
+System.out.println(s.add("uno"));
+System.out.println(s.add("uno"));`,
+    options: [
+      'true y luego false',
+      'true y luego true',
+      'false y luego false',
+      'true y luego lanza una excepción',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El método add de Collection retorna si agregó o no. El material recomienda analizarlo justamente en los Set: devuelve true si el elemento no estaba y fue añadido, y false si ya se encontraba dentro del conjunto.',
+    source: SOURCE,
+    tags: ['Set', 'HashSet'],
+  },
+  {
+    id: 'u11-q12',
+    unitId: 11,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime?',
+    code: `Set<String> s = new LinkedHashSet<>();
+s.add("zeta");
+s.add("alfa");
+s.add("beta");
+System.out.println(s);`,
+    options: [
+      '[zeta, alfa, beta]',
+      '[alfa, beta, zeta]',
+      '[beta, alfa, zeta]',
+      'Un orden impredecible, distinto en cada ejecución.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El LinkedHashSet gestiona la tabla hash con una lista doblemente enlazada, y esos enlaces definen el orden en que se insertaron los elementos. El orden de iteración es entonces el de inserción, no el alfabético: eso lo daría un TreeSet.',
+    source: SOURCE,
+    tags: ['LinkedHashSet'],
+  },
+  {
+    id: 'u11-q13',
+    unitId: 11,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime?',
+    code: `Set<String> s = new TreeSet<>();
+s.add("pera");
+s.add("banana");
+s.add("manzana");
+System.out.println(s);`,
+    options: [
+      '[banana, manzana, pera]',
+      '[pera, banana, manzana]',
+      '[manzana, banana, pera]',
+      'Un orden impredecible.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El TreeSet almacena en un árbol y ordena en función de los valores. Como String es una clase propia del sistema, se aplica su orden natural, que es el alfabético.',
+    source: SOURCE,
+    tags: ['TreeSet'],
+  },
+  {
+    id: 'u11-q14',
+    unitId: 11,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: '¿Cómo implementa internamente sus funcionalidades la clase HashSet?',
+    options: [
+      'Delegando casi todo en un mapa interno, un HashMap.',
+      'Manteniendo un ArrayList ordenado por hashCode.',
+      'Con un árbol binario balanceado.',
+      'Con una lista doblemente enlazada de nodos.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo indica expresamente: la clase HashSet delega casi todas sus funcionalidades a un mapa interno (HashMap). Al llamar al constructor, internamente lo que hace es crear ese HashMap.',
+    source: SOURCE,
+    tags: ['HashSet'],
+  },
+  {
+    id: 'u11-q15',
+    unitId: 11,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: '¿Cuál es el costo de las operaciones básicas en un HashSet?',
+    options: [
+      'Constante, siempre que la función hash disperse bien los elementos.',
+      'Logarítmico con la cantidad de elementos.',
+      'Lineal con la cantidad de elementos.',
+      'Depende del orden en que se hayan insertado.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'La tabla hash lo hace más eficiente que las clases que implementan List: proporciona tiempos constantes en inserción, borrado y búsqueda, siempre que la función hash disperse correctamente los elementos dentro de la tabla.',
+    source: SOURCE,
+    tags: ['HashSet'],
+  },
+  {
+    id: 'u11-q16',
+    unitId: 11,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: '¿Qué hace el método pollFirst() de un TreeSet?',
+    options: [
+      'Elimina el primer elemento de la colección y lo devuelve, o null si está vacía.',
+      'Devuelve el primer elemento sin eliminarlo.',
+      'Devuelve el menor elemento que sea mayor al indicado.',
+      'Ordena la colección y devuelve el resultado.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo enumera junto con pollLast(), que hace lo propio con el último. Los que consultan sin eliminar en función de otro elemento son higher() y lower().',
+    source: SOURCE,
+    tags: ['TreeSet'],
+  },
+  {
+    id: 'u11-q17',
+    unitId: 11,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt:
+      'Se necesita una colección sin duplicados donde importe el orden de llegada de los elementos. ¿Cuál corresponde?',
+    options: ['LinkedHashSet', 'HashSet', 'TreeSet', 'ArrayList'],
+    correctIndex: 0,
+    explanation:
+      'Según la matriz de decisión del material, el LinkedHashSet garantiza la unicidad y además respeta la secuencia de inserción. El HashSet no garantiza orden y el TreeSet ordena por valor natural, no por llegada.',
+    source: SOURCE,
+    tags: ['LinkedHashSet', 'Decisión'],
+  },
+  {
+    id: 'u11-q18',
+    unitId: 11,
+    type: 'vf',
+    difficulty: 'intermedio',
+    prompt: 'La interfaz Set agrega métodos propios además de los que hereda de Collection.',
+    answer: false,
+    explanation:
+      'Set hereda todos los métodos de Collection (add, remove, contains, size, etc.) y no introduce métodos específicos. Su diferencia está en cómo maneja la adición de elementos y en la garantía de unicidad.',
+    source: SOURCE,
+    tags: ['Set', 'Collection'],
+  },
 ]

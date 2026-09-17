@@ -23,7 +23,14 @@ export interface Progress {
   challenges: Record<string, ChallengeState>
 }
 
-const EMPTY: Progress = { stats: {}, history: [], challenges: {} }
+/**
+ * Devuelve siempre un objeto nuevo. Antes era una constante compartida, y como
+ * recordSession y saveChallenge la mutaban, en la primera sesión de alguien el
+ * estado quedaba con la misma referencia y React no volvía a renderizar.
+ */
+function vacio(): Progress {
+  return { stats: {}, history: [], challenges: {} }
+}
 
 const MAX_HISTORY = 30
 
@@ -35,7 +42,7 @@ const MAX_HISTORY = 30
 export function loadProgress(): Progress {
   try {
     const raw = localStorage.getItem(KEY)
-    if (!raw) return EMPTY
+    if (!raw) return vacio()
     const parsed = JSON.parse(raw) as Partial<Progress>
     return {
       stats: parsed.stats ?? {},
@@ -43,7 +50,7 @@ export function loadProgress(): Progress {
       challenges: parsed.challenges ?? {},
     }
   } catch {
-    return EMPTY
+    return vacio()
   }
 }
 
@@ -77,7 +84,7 @@ export function resetProgress(): Progress {
   } catch {
     // Ídem: si no se puede borrar, no hay nada que informar.
   }
-  return { stats: {}, history: [], challenges: {} }
+  return vacio()
 }
 
 /** Guarda el borrador de un desafío y, si corresponde, lo marca resuelto. */

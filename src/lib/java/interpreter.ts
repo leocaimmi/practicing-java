@@ -42,7 +42,14 @@ export interface RunOptions {
   maxDepth?: number
 }
 
-const DEFAULTS = { maxSteps: 200_000, maxTraceSteps: 400, maxDepth: 120 }
+/**
+ * El presupuesto de pasos tiene que dar margen para la recursión ingenua, que
+ * es lenta pero correcta: un fibonacci(20) recursivo hace más de trece mil
+ * llamadas. Si queda corto, el estudiante ve un error de tiempo agotado y cree
+ * que su código está mal. Con este techo, un bucle sin fin igual se corta en
+ * menos de un segundo.
+ */
+const DEFAULTS = { maxSteps: 3_000_000, maxTraceSteps: 400, maxDepth: 120 }
 
 class BreakSignal {}
 class ContinueSignal {}

@@ -199,4 +199,150 @@ caja.guardar(42);`,
     source: SOURCE,
     tags: ['Genéricos', 'Herencia'],
   },
+  {
+    id: 'u14-q12',
+    unitId: 14,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Qué es un método genérico?',
+    options: [
+      'Un método que puede invocarse con distintos tipos de objetos, más allá de los vinculados a la clase donde está definido.',
+      'Un método que sólo puede existir dentro de una clase genérica.',
+      'Un método que acepta cualquier cantidad de parámetros.',
+      'Un método que devuelve siempre Object.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material aclara que un método genérico puede definirse dentro de una clase genérica o dentro de una clase ordinaria, ya que la declaración del tipo es específica del método y no afecta a la clase entera.',
+    source: SOURCE,
+    tags: ['Genéricos', 'Métodos genéricos'],
+  },
+  {
+    id: 'u14-q13',
+    unitId: 14,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá la siguiente declaración. ¿Qué significa el <T> antes del tipo de retorno?',
+    code: `public static <T> void imprimirArreglo(T[] arreglo) {
+    for (T elemento : arreglo) {
+        System.out.println(elemento);
+    }
+}`,
+    options: [
+      'Define un parámetro de tipo propio del método, que permite usarlo con Integer[], String[] o cualquier otro arreglo.',
+      'Indica que el método devuelve un valor de tipo T.',
+      'Declara que la clase entera es genérica.',
+      'Obliga a que el arreglo contenga elementos de una única clase concreta fijada de antemano.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Es el ejemplo del material: <T> define un parámetro de tipo usado por el método, de modo que puede utilizarse con cualquier tipo de arreglo. El tipo de retorno acá es void, independiente de T.',
+    source: SOURCE,
+    tags: ['Genéricos', 'Métodos genéricos'],
+  },
+  {
+    id: 'u14-q14',
+    unitId: 14,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Qué es una interfaz genérica?',
+    options: [
+      'Una interfaz cuyos métodos operan sobre parámetros de tipo, que se sustituyen cuando una clase la implementa.',
+      'Una interfaz que sólo pueden implementar las clases genéricas.',
+      'Una interfaz sin métodos, que sólo declara constantes.',
+      'Una interfaz que se instancia con new indicando el tipo.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Define un conjunto de métodos que operan en tipos genéricos: no se especifica con qué tipo concreto trabajarán, se usan parámetros de tipo que se sustituyen por tipos reales al implementarla. Pueden implementarla tanto clases ordinarias como genéricas.',
+    source: SOURCE,
+    tags: ['Genéricos', 'Interfaces'],
+  },
+  {
+    id: 'u14-q15',
+    unitId: 14,
+    type: 'vf',
+    difficulty: 'avanzado',
+    prompt: 'Al instanciar una clase genérica con un tipo concreto se crea una clase nueva.',
+    answer: false,
+    explanation:
+      'El material lo aclara: todas las invocaciones de clases genéricas son expresiones de una misma clase. Al instanciar una clase genérica no se crea una clase nueva.',
+    source: SOURCE,
+    tags: ['Genéricos'],
+  },
+  {
+    id: 'u14-q16',
+    unitId: 14,
+    type: 'mc',
+    difficulty: 'basico',
+    prompt: 'Según la convención de nombres, ¿qué representan las letras K y V?',
+    options: ['Clave y valor', 'Clase y variable', 'Constante y void', 'Colección y vector'],
+    correctIndex: 0,
+    explanation:
+      'La convención del material es E para elemento de una colección, K para clave, N para número, T para tipo y V para valor. S, U y V se usan para representar otros tipos.',
+    source: SOURCE,
+    tags: ['Genéricos', 'Convenciones'],
+  },
+  {
+    id: 'u14-q17',
+    unitId: 14,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Cuáles son los dos casos de uso típicos de la genericidad que menciona el material?',
+    options: [
+      'Contenedores cuyas operaciones no dependen del tipo almacenado, y algoritmos aplicables a cualquier dato.',
+      'Las clases abstractas y las interfaces.',
+      'El manejo de excepciones y la lectura de archivos.',
+      'La herencia simple y la herencia múltiple.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material ejemplifica el primero con ArrayList o Stack, que almacenan cualquier tipo de objeto especificándolo al crearlos, y el segundo con la ordenación, un algoritmo que no depende del tipo de dato que procesa.',
+    source: SOURCE,
+    tags: ['Genéricos'],
+  },
+  {
+    id: 'u14-q18',
+    unitId: 14,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: '¿Cuál de estas declaraciones es válida en Java?',
+    code: `// A
+Mapa<String, int> a;
+
+// B
+Mapa<String, Integer> b;
+
+// C
+Pila<char> c;`,
+    options: [
+      'Sólo la B, porque los genéricos no admiten tipos primitivos.',
+      'La A y la B, porque int e Integer son equivalentes.',
+      'Las tres son válidas.',
+      'Ninguna: los genéricos requieren siempre un solo parámetro de tipo.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Los genéricos sólo pueden instanciarse con clases, no con tipos primitivos. El material usa justamente Mapa<String, int> y Pila<char> como ejemplos de lo que no se puede: hay que usar las clases envoltorio, como Integer o Character.',
+    source: SOURCE,
+    tags: ['Genéricos', 'Wrappers'],
+  },
+  {
+    id: 'u14-q19',
+    unitId: 14,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: '¿Qué expresa el comodín ? super Integer?',
+    options: [
+      'Que el tipo desconocido es Integer o alguna de sus superclases, como Number u Object: es un límite inferior.',
+      'Que el tipo desconocido es Integer o alguna de sus subclases: es un límite superior.',
+      'Que el método acepta cualquier tipo numérico.',
+      'Que el tipo se resuelve en tiempo de ejecución.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo describe como límite inferior: el tipo desconocido representa una superclase de Type, incluido Type mismo. La forma con extends es el límite superior, que va en el sentido contrario.',
+    source: SOURCE,
+    tags: ['Comodines', 'super'],
+  },
 ]

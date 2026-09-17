@@ -10,10 +10,12 @@ La pantalla de inicio ofrece cuatro modalidades de práctica:
 
 | Modalidad | Qué hace |
 | --- | --- |
-| **Verdadero o falso** | 52 afirmaciones sobre la teoría de la materia. |
-| **Opción múltiple** | 95 preguntas con distractores tomados de los errores más comunes. |
-| **Analizar código** | 29 fragmentos de Java para anticipar qué imprimen, qué lanzan o por qué no compilan. |
-| **Desafíos de código** | 12 ejercicios donde se escribe el método, se corre contra tests y se recorre la ejecución paso a paso. |
+| **Verdadero o falso** | 82 afirmaciones sobre la teoría de la materia. |
+| **Opción múltiple** | 185 preguntas con distractores tomados de los errores más comunes. |
+| **Analizar código** | 75 fragmentos de Java para anticipar qué imprimen, qué lanzan o por qué no compilan. |
+| **Desafíos de código** | 20 ejercicios donde se escribe el método, se corre contra tests y se recorre la ejecución paso a paso. |
+
+Son **342 preguntas** en total, con al menos 15 por clase y de los tres formatos en cada una.
 
 Además hay un **simulacro de parcial** (20 preguntas de las clases 3 a 12, el alcance que
 declara el resumen de la cátedra), **práctica mixta** y práctica por clase.
@@ -32,8 +34,13 @@ cada línea se ve el valor de cada variable, lo que se lleva impreso en consola 
 al final, el resultado obtenido contra el esperado. Si la ejecución corta con una excepción,
 se marca la línea.
 
-La solución de referencia queda **bloqueada hasta el tercer intento**, para que no sea la
-salida fácil.
+Cada desafío ofrece **varias soluciones posibles**, etiquetadas por nivel y con una nota que
+explica qué aporta cada enfoque frente a los otros: por ejemplo, Fibonacci iterativo contra
+recursivo, o recorrer con `for each` contra hacerlo por índice. Quedan **bloqueadas hasta el
+tercer intento**, para que no sean la salida fácil.
+
+Los botones de correr se habilitan recién cuando el código difiere del esqueleto: no tiene
+sentido gastar un intento probando lo que damos nosotros.
 
 ### Qué soporta el intérprete
 
@@ -56,12 +63,13 @@ en lugar de colgar la pestaña.
 - **React 19** con **TypeScript**
 - **Vite 8** como bundler
 - **Tailwind CSS 4**
-- **Vitest** para los tests del intérprete y de los desafíos
+- **Vitest** para los tests del intérprete, del banco de preguntas y de los desafíos
 - Tipografías **Plus Jakarta Sans** y **JetBrains Mono**, autoalojadas
 
 Sin framework de servidor: el resultado es un sitio estático, lo que mantiene la carga
-liviana (~127 KB comprimidos más las fuentes) y permite alojarlo en cualquier hosting de
-archivos estáticos.
+liviana (~132 KB comprimidos más las fuentes) y permite alojarlo en cualquier hosting de
+archivos estáticos. Los desafíos y el intérprete se cargan en un chunk aparte, sólo al entrar
+a esa sección.
 
 ## Desarrollo
 
@@ -90,7 +98,8 @@ src/
     questions/
       unit01.ts … unit16.ts # banco de preguntas, una por clase
       index.ts              # agregación y selectores
-    challenges.ts           # desafíos de código, con tests y solución
+    challenges.ts           # desafíos de código, con tests y soluciones
+    challengeMeta.ts        # sólo la cantidad, para no cargar el banco en el inicio
   lib/
     java/                   # el intérprete
       lexer.ts              # análisis léxico

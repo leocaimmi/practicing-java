@@ -197,4 +197,178 @@ Integer n = (Integer) o;`,
     source: SOURCE,
     tags: ['Object', 'Polimorfismo', 'Casting'],
   },
+  {
+    id: 'u07-q12',
+    unitId: 7,
+    type: 'mc',
+    difficulty: 'basico',
+    prompt: '¿Cuáles son los cuatro métodos más importantes de la clase Object?',
+    options: [
+      'equals(), hashCode(), toString() y getClass().',
+      'equals(), compareTo(), clone() y finalize().',
+      'get(), set(), toString() y print().',
+      'equals(), hashCode(), compareTo() y iterator().',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Son los que enumera el material como disponibles en todas las clases de Java, porque todas heredan directa o indirectamente de Object.',
+    source: SOURCE,
+    tags: ['Object'],
+  },
+  {
+    id: 'u07-q13',
+    unitId: 7,
+    type: 'vf',
+    difficulty: 'intermedio',
+    prompt:
+      'La implementación por omisión de toString() suele ser suficiente para las clases que escribe el programador.',
+    answer: false,
+    explanation:
+      'El material dice lo contrario: la implementación por omisión raramente alcanza, y para la mayoría de las clases creadas por el programador será deseable sobrescribirla para dar una representación en cadena que describa apropiadamente al objeto.',
+    source: SOURCE,
+    tags: ['toString'],
+  },
+  {
+    id: 'u07-q14',
+    unitId: 7,
+    type: 'mc',
+    difficulty: 'basico',
+    prompt: '¿Qué indica la anotación @Override sobre un método?',
+    options: [
+      'Que el método está sobrescribiendo uno definido en una clase superior.',
+      'Que el método no puede volver a sobrescribirse en las subclases.',
+      'Que el método se ejecuta antes que el constructor.',
+      'Que el método pertenece a la clase y no a las instancias.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo señala al mostrar el equals sobrescrito en la clase Persona: la notación @Override indica que el método está siendo sobrescrito.',
+    source: SOURCE,
+    tags: ['Sobrescritura', 'Object'],
+  },
+  {
+    id: 'u07-q15',
+    unitId: 7,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime la última línea?',
+    code: `class Persona {
+    private String nombre;
+
+    public Persona(String nombre) {
+        this.nombre = nombre;
+    }
+
+    @Override
+    public String toString() {
+        return "Persona: " + nombre;
+    }
+}
+
+// En el main:
+Persona p = new Persona("Ana");
+System.out.println(p);`,
+    options: [
+      'Persona: Ana',
+      'La dirección de memoria del objeto.',
+      'Ana',
+      'No compila: println() no acepta un objeto Persona.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'println() invoca internamente el toString() del objeto. Como la clase lo sobrescribe devolviendo un String que la describe, se imprime ese texto en lugar de la representación por omisión de Object.',
+    source: SOURCE,
+    tags: ['toString'],
+  },
+  {
+    id: 'u07-q16',
+    unitId: 7,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Qué establece el contrato entre equals() y hashCode()?',
+    options: [
+      'Si dos objetos son iguales según equals(), ambos deben generar el mismo hashCode().',
+      'Si dos objetos tienen el mismo hashCode(), equals() debe devolver true obligatoriamente.',
+      'hashCode() debe devolver siempre un valor distinto para cada objeto.',
+      'equals() debe calcularse a partir del resultado de hashCode().',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Ésa es la dirección del contrato. Romperla quiebra el funcionamiento de colecciones como HashSet y HashMap, que usan el código hash para ubicar los objetos antes de compararlos.',
+    source: SOURCE,
+    tags: ['equals', 'hashCode'],
+  },
+  {
+    id: 'u07-q17',
+    unitId: 7,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Para qué se utiliza el código hash que devuelve hashCode()?',
+    options: [
+      'Es un número entero que sirve para identificar y ubicar un objeto en una tabla hash.',
+      'Es el identificador único que le asigna el sistema operativo al objeto.',
+      'Es la cantidad de bytes que ocupa el objeto en el heap.',
+      'Es el orden que tendrá el objeto al ordenar una colección.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo define como un código entero que se utiliza para identificar de manera única un objeto en una tabla hash, y es la base de la indexación en HashSet y HashMap.',
+    source: SOURCE,
+    tags: ['hashCode'],
+  },
+  {
+    id: 'u07-q18',
+    unitId: 7,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Qué devuelve el método getClass()?',
+    options: [
+      'Un objeto Class con información de la clase del objeto en tiempo de ejecución.',
+      'El nombre de la clase como un String.',
+      'Una copia del objeto con su tipo original.',
+      'La superclase directa del objeto.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Devuelve una representación en tiempo de ejecución de la clase del objeto: un objeto Class al que se le puede pedir su nombre, el de su superclase y los de las interfaces que implementa. Además es final, así que no puede sobrescribirse.',
+    source: SOURCE,
+    tags: ['getClass'],
+  },
+  {
+    id: 'u07-q19',
+    unitId: 7,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime la última línea?',
+    code: `Object[] elementos = new Object[2];
+elementos[0] = "una cadena";
+elementos[1] = 42;
+
+String texto = (String) elementos[0];
+System.out.println(texto.toUpperCase());`,
+    options: [
+      'UNA CADENA',
+      'una cadena',
+      'Lanza ClassCastException.',
+      'No compila: no se puede castear desde Object.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El casteo es válido porque el objeto guardado en esa posición es efectivamente un String. Recuperado su tipo, se puede invocar toUpperCase(). El problema de guardar todo como Object es justamente que hasta el casteo se pierde el acceso a los métodos propios de la clase.',
+    source: SOURCE,
+    tags: ['Casting', 'Object'],
+  },
+  {
+    id: 'u07-q20',
+    unitId: 7,
+    type: 'vf',
+    difficulty: 'intermedio',
+    prompt:
+      'Las subclases pueden sobrescribir equals() para comparar objetos de un tipo definido por el programador.',
+    answer: true,
+    explanation:
+      'Es lo que indica el material: las subclases pueden sobrescribir equals() para realizar la comparación adecuada entre dos objetos de un tipo definido por el programador, ya que la versión heredada de Object compara referencias.',
+    source: SOURCE,
+    tags: ['equals'],
+  },
 ]

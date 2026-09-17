@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import type { Challenge } from '../data/challenges'
+import { challengeById } from '../data/challenges'
 import { unitById } from '../data/units'
 import { runChallenge, type RunReport, type TestCase } from '../lib/java/runner'
 import type { Difficulty } from '../types'
@@ -8,8 +8,10 @@ import { CodeEditor } from './CodeEditor'
 import { StepThrough } from './StepThrough'
 
 interface Props {
-  challenge: Challenge
-  initialCode: string
+  /** Se resuelve acá dentro para que el banco de desafíos quede en este chunk. */
+  challengeId: string
+  /** Borrador guardado, si lo hay. */
+  savedCode?: string
   solved: boolean
   onSaveCode: (code: string, solved: boolean) => void
   onExit: () => void
@@ -21,24 +23,39 @@ const DIFFICULTY_LABEL: Record<Difficulty, string> = {
   avanzado: 'Avanzado',
 }
 
-/** Intentos que hay que gastar antes de poder ver la solución. */
+const LEVEL_STYLE: Record<Difficulty, string> = {
+  basico: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300',
+  intermedio: 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300',
+  avanzado: 'bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300',
+}
+
+/** Intentos que hay que gastar antes de poder ver las soluciones. */
 const ATTEMPTS_TO_UNLOCK = 3
 
 type Tab = 'pasos' | 'tests'
 
-export function ChallengeView({ challenge, initialCode, solved, onSaveCode, onExit }: Props) {
-  const [code, setCode] = useState(initialCode)
+export function ChallengeView({ challengeId, savedCode, solved, onSaveCode, onExit }: Props) {
+  const challenge = challengeById.get(challengeId)!
+  const [code, setCode] = useState(savedCode || challenge.starterCode)
   const [report, setReport] = useState<RunReport | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const [tab, setTab] = useState<Tab>('pasos')
   const [hintsShown, setHintsShown] = useState(0)
   const [showSolution, setShowSolution] = useState(false)
   const [attempts, setAttempts] = useState(0)
+  const [solutionShown, setSolutionShown] = useState(0)
   // Cambia en cada corrida para remontar el paso a paso y dejarlo en el inicio.
   const [runId, setRunId] = useState(0)
 
   const unit = unitById.get(challenge.unitId)
   const visibleTests = useMemo(() => challenge.spec.tests.filter((t) => !t.hidden), [challenge])
+
+  /**
+   * No tiene sentido correr los tests sobre el esqueleto que damos nosotros:
+   * siempre falla y sólo gasta un intento.
+   */
+  const sinEscribir =
+    code.trim().length === 0 || code.trim() === challenge.starterCode.trim()
 
   // La solución aparece recién después de intentarlo, o si ya lo resolvió.
   const solutionUnlocked = solved || attempts >= ATTEMPTS_TO_UNLOCK
@@ -116,29 +133,40 @@ export function ChallengeView({ challenge, initialCode, solved, onSaveCode, onEx
 
           <div className="surface rounded-2xl p-5">
             <h2 className="text-xs font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
-              Casos de ejemplo
+              Output esperado
             </h2>
             <ul className="mt-3 flex flex-col gap-2">
               {visibleTests.map((test, index) => (
-                <li
-                  key={index}
-                  className="rounded-lg bg-slate-100 px-3 py-2 font-mono text-[13px] dark:bg-slate-800/60"
-                >
-                  <span className="text-slate-700 dark:text-slate-200">
-                    {challenge.spec.methodName}(
-                    {test.args
-                      .map((arg) => (typeof arg === 'string' ? `"${arg}"` : JSON.stringify(arg)))
-                      .join(', ')}
-                    )
-                  </span>
-                  <span className="text-slate-400 dark:text-slate-500"> → </span>
-                  <span className="text-emerald-700 dark:text-emerald-300">
-                    {test.expectedOutput
-                      ? `imprime ${test.expectedOutput.length} líneas`
-                      : typeof test.expected === 'string'
-                        ? `"${test.expected}"`
-                        : JSON.stringify(test.expected)}
-                  </span>
+                <li key={index}>
+                  <div className="rounded-lg bg-slate-100 px-3 py-2 font-mono text-[13px] dark:bg-slate-800/60">
+                    <span className="text-slate-700 dark:text-slate-200">
+                      {challenge.spec.methodName}(
+                      {test.args
+                        .map((arg) => (typeof arg === 'string' ? `"${arg}"` : JSON.stringify(arg)))
+                        .join(', ')}
+                      )
+                    </span>
+
+                    {test.expectedOutput ? (
+                      <span className="text-slate-400 dark:text-slate-500"> tiene que imprimir:</span>
+                    ) : (
+                      <>
+                        <span className="text-slate-400 dark:text-slate-500"> → </span>
+                        <span className="text-emerald-700 dark:text-emerald-300">
+                          {typeof test.expected === 'string'
+                            ? `"${test.expected}"`
+                            : JSON.stringify(test.expected)}
+                        </span>
+                      </>
+                    )}
+                  </div>
+
+                  {/* En los desafíos que se evalúan por consola se muestra la salida completa. */}
+                  {test.expectedOutput && (
+                    <pre className="mt-1.5 overflow-x-auto rounded-lg bg-slate-900 px-3 py-2 font-mono text-[12px] leading-relaxed text-emerald-300 dark:ring-1 dark:ring-slate-800">
+                      {test.expectedOutput.join('\n')}
+                    </pre>
+                  )}
                 </li>
               ))}
             </ul>
@@ -185,14 +213,18 @@ export function ChallengeView({ challenge, initialCode, solved, onSaveCode, onEx
             <button
               type="button"
               onClick={() => run(false)}
-              className="surface rounded-xl px-5 py-2.5 font-bold transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
+              disabled={sinEscribir}
+              title={sinEscribir ? 'Escribí tu solución para poder probarla' : undefined}
+              className="surface rounded-xl px-5 py-2.5 font-bold transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:bg-transparent dark:hover:bg-slate-800"
             >
               Probar
             </button>
             <button
               type="button"
               onClick={() => run(true)}
-              className="rounded-xl bg-sky-600 px-5 py-2.5 font-bold text-white transition-colors hover:bg-sky-500"
+              disabled={sinEscribir}
+              title={sinEscribir ? 'Escribí tu solución para poder enviarla' : undefined}
+              className="rounded-xl bg-sky-600 px-5 py-2.5 font-bold text-white transition-colors hover:bg-sky-500 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 disabled:hover:bg-slate-300 dark:disabled:bg-slate-800 dark:disabled:text-slate-600"
             >
               Enviar
             </button>
@@ -211,17 +243,24 @@ export function ChallengeView({ challenge, initialCode, solved, onSaveCode, onEx
                 onClick={() => setShowSolution((v) => !v)}
                 className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800"
               >
-                {showSolution ? 'Ocultar solución' : 'Ver solución'}
+                {showSolution ? 'Ocultar soluciones' : 'Ver soluciones'}
               </button>
             ) : (
               <span
                 className="cursor-not-allowed px-3 py-2 text-sm text-slate-400 dark:text-slate-600"
                 title="Se habilita después de intentarlo"
               >
-                Solución en {attemptsLeft} {attemptsLeft === 1 ? 'intento' : 'intentos'}
+                Soluciones en {attemptsLeft} {attemptsLeft === 1 ? 'intento' : 'intentos'}
               </span>
             )}
           </div>
+
+          {sinEscribir && (
+            <p className="rounded-xl border border-dashed border-slate-300 px-4 py-3 text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+              Escribí tu solución en el editor para habilitar los botones. Probar y Enviar se
+              activan apenas modifiques el código.
+            </p>
+          )}
 
           {report && (
             <>
@@ -273,12 +312,43 @@ export function ChallengeView({ challenge, initialCode, solved, onSaveCode, onEx
           {showSolution && solutionUnlocked && (
             <div className="surface rounded-2xl p-5">
               <h3 className="text-xs font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
-                Solución de referencia
+                Soluciones posibles
               </h3>
-              <p className="mt-2 mb-3 text-sm text-slate-600 dark:text-slate-400">
-                Es una forma de resolverlo, no la única. Si la tuya pasa los tests, está bien.
+              <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                Estos {challenge.solutions.length} enfoques pasan todos los casos. Si el tuyo
+                también los pasa, está bien aunque no sea ninguno de éstos.
               </p>
-              <CodeBlock code={challenge.solution} />
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {challenge.solutions.map((solucion, index) => (
+                  <button
+                    key={solucion.label}
+                    type="button"
+                    onClick={() => setSolutionShown(index)}
+                    className={`rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${
+                      solutionShown === index
+                        ? 'bg-sky-600 text-white'
+                        : 'surface text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+                    }`}
+                  >
+                    {solucion.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-4">
+                <div className="mb-2 flex items-center gap-2">
+                  <span
+                    className={`rounded-md px-2 py-0.5 text-xs font-bold ${LEVEL_STYLE[challenge.solutions[solutionShown].level]}`}
+                  >
+                    Nivel {DIFFICULTY_LABEL[challenge.solutions[solutionShown].level].toLowerCase()}
+                  </span>
+                </div>
+                <CodeBlock code={challenge.solutions[solutionShown].code} />
+                <p className="mt-3 text-[15px] leading-relaxed text-slate-700 dark:text-slate-200">
+                  {challenge.solutions[solutionShown].note}
+                </p>
+              </div>
             </div>
           )}
         </section>

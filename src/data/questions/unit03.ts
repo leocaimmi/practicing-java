@@ -195,4 +195,184 @@ System.out.println(numeros[1]);`,
     source: SOURCE,
     tags: ['String', 'compareTo'],
   },
+  {
+    id: 'u03-q13',
+    unitId: 3,
+    type: 'vf',
+    difficulty: 'intermedio',
+    prompt: 'El método trim() elimina los espacios en blanco de la cadena original.',
+    answer: false,
+    explanation:
+      'Como todos los métodos de String, trim() devuelve una copia sin los espacios al inicio y al final. La cadena original no cambia, porque los objetos String son inmutables.',
+    source: SOURCE,
+    tags: ['String', 'Inmutabilidad'],
+  },
+  {
+    id: 'u03-q14',
+    unitId: 3,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente fragmento. ¿Qué imprime por consola?',
+    code: `String frase = "casa de casas";
+System.out.println(frase.indexOf("casa"));
+System.out.println(frase.lastIndexOf("casa"));`,
+    options: ['0 y luego 8', '0 y luego 0', '1 y luego 9', '0 y luego 12'],
+    correctIndex: 0,
+    explanation:
+      'indexOf() busca desde el principio y encuentra "casa" en la posición 0. lastIndexOf() busca desde el final: la última aparición arranca en la posición 8, contando desde cero.',
+    source: SOURCE,
+    tags: ['String', 'indexOf'],
+  },
+  {
+    id: 'u03-q15',
+    unitId: 3,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente fragmento. ¿Qué imprime por consola?',
+    code: `String s = "Java";
+System.out.println(s.charAt(0));
+System.out.println(s.charAt(3));`,
+    options: ['J y luego a', 'J y luego v', 'a y luego a', 'Lanza StringIndexOutOfBoundsException.'],
+    correctIndex: 0,
+    explanation:
+      'charAt() retorna el carácter que está en la posición indicada, contando desde cero: la 0 es la J y la 3 es la última a de "Java".',
+    source: SOURCE,
+    tags: ['String', 'charAt'],
+  },
+  {
+    id: 'u03-q16',
+    unitId: 3,
+    type: 'mc',
+    difficulty: 'basico',
+    prompt: '¿Qué hace el método endsWith(String sufijo)?',
+    options: [
+      'Indica con un boolean si la cadena termina con el sufijo indicado.',
+      'Devuelve la posición donde comienza el sufijo.',
+      'Recorta la cadena quitándole el sufijo.',
+      'Agrega el sufijo al final de la cadena.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'endsWith() dice si la cadena termina o no con el sufijo indicado, y startsWith() hace lo mismo con el prefijo. Ambos devuelven boolean.',
+    source: SOURCE,
+    tags: ['String'],
+  },
+  {
+    id: 'u03-q17',
+    unitId: 3,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente fragmento. ¿Qué imprime por consola?',
+    code: `String[] nombres = new String[2];
+System.out.println(nombres[0]);
+System.out.println(nombres.length);`,
+    options: [
+      'null y luego 2',
+      'Una cadena vacía y luego 2',
+      '0 y luego 2',
+      'Lanza NullPointerException en la primera línea.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Los arreglos de objetos se inicializan con null, no con cadena vacía. length retorna la longitud total del arreglo, esté cargado o no, así que da 2.',
+    source: SOURCE,
+    tags: ['Arrays', 'null'],
+  },
+  {
+    id: 'u03-q18',
+    unitId: 3,
+    type: 'vf',
+    difficulty: 'basico',
+    prompt: 'Al declarar un arreglo, los corchetes pueden ir tanto después del tipo como después del nombre.',
+    answer: true,
+    explanation:
+      'El material lo menciona al describir las formas de declarar un arreglo: el tipo de datos seguido de corchetes y el nombre de la variable, o también con los corchetes al final.',
+    source: SOURCE,
+    tags: ['Arrays'],
+  },
+  {
+    id: 'u03-q19',
+    unitId: 3,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Por qué hay que usar el operador new para crear un arreglo?',
+    options: [
+      'Porque un arreglo es un objeto en Java, y como tal debe instanciarse.',
+      'Porque es la única manera de fijar el tipo de los elementos.',
+      'Porque los arreglos se almacenan en el stack y new los reserva ahí.',
+      'No hace falta: los arreglos se crean solos al declararlos.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo plantea así: como un Array es considerado un Objeto en Java, debe crearse una instancia. Se usa new, el tipo de los elementos y el número de elementos.',
+    source: SOURCE,
+    tags: ['Arrays'],
+  },
+  {
+    id: 'u03-q20',
+    unitId: 3,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente fragmento. ¿Qué imprime por consola?',
+    code: `int[] nums = {2, 4, 6};
+int total = 0;
+for (int n : nums) {
+    total += n;
+}
+System.out.println(total);`,
+    options: ['12', '6', '3', 'No compila: falta el índice en el for.'],
+    correctIndex: 0,
+    explanation:
+      'Es el for each que presenta el material como forma nueva de recorrer arreglos. En cada vuelta la variable n toma un elemento del arreglo, así que la suma da 2 + 4 + 6 = 12.',
+    source: SOURCE,
+    tags: ['Arrays', 'for each'],
+  },
+  {
+    id: 'u03-q21',
+    unitId: 3,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Qué método del StringBuilder agrega texto al final?',
+    options: ['append(s)', 'add(s)', 'concat(s)', 'push(s)'],
+    correctIndex: 0,
+    explanation:
+      'Entre los métodos clave del StringBuilder, el material enumera append(s), insert(offset, s), delete(start, end), reverse() y setCharAt(index, ch).',
+    source: SOURCE,
+    tags: ['StringBuilder'],
+  },
+  {
+    id: 'u03-q22',
+    unitId: 3,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente fragmento. ¿Qué imprime por consola?',
+    code: `StringBuilder sb = new StringBuilder("abc");
+sb.append("de");
+sb.reverse();
+System.out.println(sb.toString());`,
+    options: ['edcba', 'abcde', 'cbaed', 'abc'],
+    correctIndex: 0,
+    explanation:
+      'A diferencia de String, el StringBuilder se modifica sin generar instancias nuevas: append deja "abcde" y reverse lo invierte en el lugar, quedando "edcba".',
+    source: SOURCE,
+    tags: ['StringBuilder'],
+  },
+  {
+    id: 'u03-q23',
+    unitId: 3,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Cuál es la ventaja de usar StringBuilder en lugar de concatenar String dentro de un ciclo?',
+    options: [
+      'Evita crear un objeto nuevo en memoria por cada concatenación.',
+      'Permite guardar caracteres de distintos tipos en la misma secuencia.',
+      'Ordena automáticamente los caracteres al agregarlos.',
+      'Es la única forma de recorrer una cadena carácter por carácter.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El StringBuilder gestiona una secuencia de caracteres mutable, orientada a optimizar el rendimiento y evitar la asignación innecesaria de objetos temporales en memoria. Con String, cada modificación genera una instancia nueva.',
+    source: SOURCE,
+    tags: ['StringBuilder', 'Inmutabilidad'],
+  },
 ]

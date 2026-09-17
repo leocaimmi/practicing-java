@@ -210,4 +210,200 @@ class Perro implements Mascota {
     source: SOURCE,
     tags: ['Interfaces', 'Clases abstractas'],
   },
+  {
+    id: 'u09-q12',
+    unitId: 9,
+    type: 'mc',
+    difficulty: 'basico',
+    prompt: '¿Qué palabra clave usa una clase para comprometerse con el contrato de una interfaz?',
+    options: ['implements', 'extends', 'interface', 'override'],
+    correctIndex: 0,
+    explanation:
+      'Para implementar una interfaz se usa implements en la declaración de la clase, seguida del nombre de la interfaz. extends es para heredar de una clase, y una interfaz puede a su vez extender otras interfaces.',
+    source: SOURCE,
+    tags: ['Interfaces', 'implements'],
+  },
+  {
+    id: 'u09-q13',
+    unitId: 9,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá la siguiente declaración. ¿Es válida en Java?',
+    code: `interface Nadador {
+    void nadar();
+}
+
+interface Volador {
+    void volar();
+}
+
+class Pato extends Animal implements Nadador, Volador {
+    @Override
+    public void nadar() { }
+
+    @Override
+    public void volar() { }
+}`,
+    options: [
+      'Sí: una clase puede heredar de una clase e implementar varias interfaces al mismo tiempo.',
+      'No: una clase no puede implementar más de una interfaz.',
+      'No: si hereda de una clase ya no puede implementar interfaces.',
+      'Sí, pero sólo si Animal es abstracta.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material muestra exactamente esta forma: public class ClaseB extends ClaseA implements Interface1, Interface2. Ahí está la "suerte de herencia múltiple" que dan las interfaces, sin romper la herencia simple de clases.',
+    source: SOURCE,
+    tags: ['Interfaces', 'Herencia múltiple'],
+  },
+  {
+    id: 'u09-q14',
+    unitId: 9,
+    type: 'vf',
+    difficulty: 'intermedio',
+    prompt: 'Una interfaz puede heredar de varias interfaces a la vez.',
+    answer: true,
+    explanation:
+      'El material lo muestra con la forma public interface MiInterfaz extends Interface1, Interface2. La restricción de herencia simple aplica a las clases, no a las interfaces.',
+    source: SOURCE,
+    tags: ['Interfaces', 'Herencia múltiple'],
+  },
+  {
+    id: 'u09-q15',
+    unitId: 9,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: 'Sobre los constructores, ¿qué diferencia hay entre una clase abstracta y una interfaz?',
+    options: [
+      'La clase abstracta sí puede tener constructores, que usan sus subclases; la interfaz no puede tener bajo ningún concepto.',
+      'Las dos pueden tenerlos, pero los de la interfaz son implícitamente privados.',
+      'Ninguna de las dos puede tener constructores.',
+      'La interfaz puede tenerlos y la clase abstracta no, porque no se instancia.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Una clase abstracta puede contener variables de instancia, constructores, constantes y métodos concretos y abstractos. Una interfaz no es una clase, no se pueden crear objetos de ella y por eso tampoco puede contener constructores: sólo constantes y métodos sin implementar.',
+    source: SOURCE,
+    tags: ['Interfaces', 'Clases abstractas'],
+  },
+  {
+    id: 'u09-q16',
+    unitId: 9,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: 'Sobre las variables, ¿qué diferencia hay entre una clase abstracta y una interfaz?',
+    options: [
+      'La clase abstracta puede tener variables de instancia; la interfaz únicamente constantes.',
+      'Las dos pueden tener variables de instancia, pero la interfaz las hace públicas.',
+      'Ninguna de las dos puede declarar variables de ningún tipo.',
+      'La interfaz puede tener variables de instancia y la clase abstracta no.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'La interfaz no puede contener variables de instancia, sólo constantes y métodos sin implementar. La clase abstracta sí puede tenerlas, lo que permite que las subclases hereden y utilicen esos campos.',
+    source: SOURCE,
+    tags: ['Interfaces', 'Clases abstractas'],
+  },
+  {
+    id: 'u09-q17',
+    unitId: 9,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente compareTo. ¿En qué orden quedan las personas al ordenarlas?',
+    code: `class Persona implements Comparable<Persona> {
+    String nombre;
+    int edad;
+
+    @Override
+    public int compareTo(Persona otra) {
+        return otra.edad - this.edad;
+    }
+}`,
+    options: [
+      'De mayor a menor edad.',
+      'De menor a mayor edad.',
+      'Alfabéticamente por nombre.',
+      'No se ordenan: la resta invertida rompe el contrato y lanza una excepción.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'La resta está invertida respecto del orden ascendente: devuelve negativo cuando la edad de la otra persona es menor, es decir cuando esta persona es "menor" según el contrato. El resultado es un orden descendente por edad.',
+    source: SOURCE,
+    tags: ['Comparable', 'compareTo'],
+  },
+  {
+    id: 'u09-q18',
+    unitId: 9,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Cuántos métodos declara la interfaz Comparable?',
+    options: ['Uno solo: compareTo()', 'Dos: compareTo() y equals()', 'Tres', 'Ninguno: sólo constantes'],
+    correctIndex: 0,
+    explanation:
+      'El material lo remarca: compareTo(Object o) ES EL ÚNICO MÉTODO de la interfaz Comparable. Un objeto a se compara con otro b mediante a.compareTo(b).',
+    source: SOURCE,
+    tags: ['Comparable', 'compareTo'],
+  },
+  {
+    id: 'u09-q19',
+    unitId: 9,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Para qué estructuras y algoritmos resulta fundamental implementar Comparable?',
+    options: [
+      'Para TreeSet y TreeMap, y para ordenar con Arrays.sort() y Collections.sort().',
+      'Para HashSet y HashMap, que necesitan el orden natural.',
+      'Para ArrayList, que ordena automáticamente al agregar.',
+      'Para los arreglos de tipos primitivos.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Comparable define el orden natural de los objetos de una clase, y el material lo presenta como fundamental para las estructuras que dependen de un orden, como TreeSet y TreeMap, y para los algoritmos de ordenación.',
+    source: SOURCE,
+    tags: ['Comparable'],
+  },
+  {
+    id: 'u09-q20',
+    unitId: 9,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente código. ¿Es válido?',
+    code: `interface InstrumentoMusical {
+    void tocar();
+}
+
+class Guitarra implements InstrumentoMusical {
+    @Override
+    public void tocar() { }
+}
+
+class Musico {
+    public void ensayar(InstrumentoMusical instrumento) {
+        instrumento.tocar();
+    }
+}`,
+    options: [
+      'Sí: la interfaz es un tipo de referencia y puede usarse como tipo de un parámetro.',
+      'No: los parámetros no pueden ser de tipo interfaz.',
+      'No: habría que recibir un objeto Guitarra y castearlo.',
+      'Sí, pero sólo si Musico también implementa la interfaz.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Es el ejemplo del material. Al declarar una interfaz se define un nuevo tipo de referencia, que puede usarse en variables, parámetros y valores de retorno. Así ensayar() opera con cualquier clase que implemente InstrumentoMusical, sin depender de la herencia.',
+    source: SOURCE,
+    tags: ['Interfaces', 'Polimorfismo'],
+  },
+  {
+    id: 'u09-q21',
+    unitId: 9,
+    type: 'vf',
+    difficulty: 'basico',
+    prompt: 'Una interfaz define métodos con su implementación, para que las clases la reutilicen.',
+    answer: false,
+    explanation:
+      'Es al revés: define un conjunto de métodos SIN implementación, más constantes. El material la describe como una clase abstracta llevada al límite, en la que todos los métodos son abstractos. La finalidad es definir el formato que deben tener esos métodos.',
+    source: SOURCE,
+    tags: ['Interfaces'],
+  },
 ]

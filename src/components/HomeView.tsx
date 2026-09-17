@@ -1,7 +1,7 @@
 import type { QuestionType } from '../types'
 import { units } from '../data/units'
 import { allQuestions, countByType, questionsByUnit } from '../data/questions'
-import { challenges } from '../data/challenges'
+import { CHALLENGE_COUNT } from '../data/challengeMeta'
 import { unitAccuracy, type Progress, type Theme } from '../lib/storage'
 import {
   IconArrowRight,
@@ -200,7 +200,7 @@ export function HomeView({
 
             <span className="mt-5 flex items-center justify-between">
               <span className="text-sm font-semibold text-slate-500 tabular-nums dark:text-slate-400">
-                {challenges.length} desafíos
+                {CHALLENGE_COUNT} desafíos
               </span>
               <IconArrowRight className="h-5 w-5 text-slate-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-slate-600 dark:group-hover:text-slate-200" />
             </span>

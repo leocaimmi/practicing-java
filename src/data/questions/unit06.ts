@@ -185,4 +185,192 @@ Figura f = new Figura();`,
     source: SOURCE,
     tags: ['Abstracción', 'POO'],
   },
+  {
+    id: 'u06-q11',
+    unitId: 6,
+    type: 'vf',
+    difficulty: 'intermedio',
+    prompt: 'Una clase abstracta puede tener métodos concretos, con su cuerpo implementado.',
+    answer: true,
+    explanation:
+      'Una clase abstracta es similar a una concreta: posee atributos y métodos, y puede combinar métodos concretos con abstractos. La diferencia es que no se puede instanciar. Una interfaz, en cambio, sólo puede tener métodos abstractos.',
+    source: SOURCE,
+    tags: ['abstract'],
+  },
+  {
+    id: 'u06-q12',
+    unitId: 6,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente código. ¿Qué ocurre al compilarlo?',
+    code: `abstract class Figura {
+    public abstract double calcularArea();
+    public abstract String describir();
+}
+
+class Cuadrado extends Figura {
+    private double lado;
+
+    public Cuadrado(double lado) {
+        this.lado = lado;
+    }
+
+    @Override
+    public double calcularArea() {
+        return lado * lado;
+    }
+}`,
+    options: [
+      'No compila: Cuadrado no implementa describir() y tampoco se declara abstracta.',
+      'Compila: alcanza con implementar uno de los dos métodos abstractos.',
+      'Compila, y describir() devuelve null por omisión.',
+      'No compila: una clase abstracta no puede tener más de un método abstracto.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Las subclases concretas están obligadas a sobrescribir todos los métodos abstractos que heredan. Si no interesa implementar alguno, la subclase debe declararse también como abstracta.',
+    source: SOURCE,
+    tags: ['abstract', 'Métodos abstractos'],
+  },
+  {
+    id: 'u06-q13',
+    unitId: 6,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Cuál de estas NO es una ventaja del encapsulamiento según el material?',
+    options: [
+      'Permite que cualquier clase modifique directamente los atributos, lo que agiliza el código.',
+      'Ayuda a mantener la integridad de los datos de la clase.',
+      'Hace más fáciles los cambios internos de la clase.',
+      'Facilita la reutilización del código y mejora su seguridad.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El encapsulamiento va en el sentido contrario: impide el acceso directo para que el estado sólo se modifique de maneras lógicamente coherentes. Las otras tres sí son las ventajas que enumera el material.',
+    source: SOURCE,
+    tags: ['Encapsulamiento'],
+  },
+  {
+    id: 'u06-q14',
+    unitId: 6,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime la última línea?',
+    code: `public class Cuenta {
+    private double saldo = 0;
+
+    public void depositar(double monto) {
+        if (monto > 0) {
+            saldo += monto;
+        }
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+}
+
+// En el main:
+Cuenta c = new Cuenta();
+c.depositar(500);
+c.depositar(-200);
+System.out.println(c.getSaldo());`,
+    options: [
+      '500.0',
+      '300.0',
+      '700.0',
+      'No compila: saldo es privado y no se puede modificar.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Es el beneficio del encapsulamiento: como el atributo es privado y sólo se toca a través de depositar(), el método puede imponer la regla de negocio y rechazar el monto negativo. El saldo queda en 500.0, y se imprime con decimal por ser double.',
+    source: SOURCE,
+    tags: ['Encapsulamiento'],
+  },
+  {
+    id: 'u06-q15',
+    unitId: 6,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Para qué sirve un getter?',
+    options: [
+      'Para obtener o recuperar el valor ya asignado a un atributo y poder utilizarlo.',
+      'Para asignarle un valor a un atributo de forma explícita.',
+      'Para inicializar todos los atributos al crear el objeto.',
+      'Para eliminar el valor de un atributo y dejarlo en null.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Del inglés get (obtener), el getter sirve para recuperar o acceder al valor de un atributo. El que asigna es el setter, que nunca retorna nada: siempre es void.',
+    source: SOURCE,
+    tags: ['Getters y setters', 'Encapsulamiento'],
+  },
+  {
+    id: 'u06-q16',
+    unitId: 6,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Cuántos métodos de acceso recomienda crear el material por cada atributo encapsulado?',
+    options: [
+      'Dos: uno para obtener el dato y otro para modificarlo.',
+      'Uno solo, que sirva para ambas cosas según los parámetros.',
+      'Tres: uno para obtener, uno para modificar y uno para borrar.',
+      'Ninguno: los atributos deberían ser públicos para evitar código repetido.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo indica al presentar el ejemplo de la clase Gato: debe crearse un método para obtener el dato (get) y otro para modificarlo (set) por cada uno de los atributos.',
+    source: SOURCE,
+    tags: ['Getters y setters'],
+  },
+  {
+    id: 'u06-q17',
+    unitId: 6,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Qué permite la abstracción al separar la implementación de los métodos públicos?',
+    options: [
+      'Facilita la comprensión y el mantenimiento del código, y permite mayor modularidad y reutilización.',
+      'Reduce la cantidad de memoria que ocupa cada objeto.',
+      'Elimina la necesidad de escribir constructores.',
+      'Permite que una clase herede de varias superclases.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Ésas son las ventajas que enumera el material: encapsular la complejidad de un objeto y separar la implementación de sus métodos públicos facilita la comprensión y el mantenimiento, y permite mayor modularidad y reutilización.',
+    source: SOURCE,
+    tags: ['Abstracción'],
+  },
+  {
+    id: 'u06-q18',
+    unitId: 6,
+    type: 'vf',
+    difficulty: 'intermedio',
+    prompt:
+      'Las clases abstractas fueron pensadas para crear instancias de ellas y también para servir de superclase.',
+    answer: false,
+    explanation:
+      'El material es explícito: son clases que NO fueron pensadas para crear instancias sino exclusivamente para servir como superclase de otra. Funcionan como plantilla del comportamiento común de un conjunto de clases relacionadas.',
+    source: SOURCE,
+    tags: ['abstract'],
+  },
+  {
+    id: 'u06-q19',
+    unitId: 6,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt:
+      'Si una clase tiene al menos un método abstracto, ¿qué está obligada a hacer?',
+    options: [
+      'Declararse ella misma como abstracta.',
+      'Declarar todos sus métodos como abstractos.',
+      'Implementar una interfaz que declare ese método.',
+      'Declarar el método como final para evitar ambigüedades.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'La regla del material es directa: si un método se declara abstracto, se debe marcar la clase como abstracta. No puede haber métodos abstractos en una clase concreta.',
+    source: SOURCE,
+    tags: ['abstract', 'Métodos abstractos'],
+  },
 ]

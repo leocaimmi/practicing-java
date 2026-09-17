@@ -193,4 +193,164 @@ System.out.println(edades.get("Ana"));`,
     source: SOURCE,
     tags: ['HashMap', 'Decisión'],
   },
+  {
+    id: 'u12-q13',
+    unitId: 12,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime?',
+    code: `Map<String, Integer> stock = new LinkedHashMap<>();
+stock.put("clavos", 50);
+stock.put("tornillos", 30);
+System.out.println(stock.keySet());
+System.out.println(stock.values());`,
+    options: [
+      '[clavos, tornillos] y luego [50, 30]',
+      '[50, 30] y luego [clavos, tornillos]',
+      '{clavos=50, tornillos=30} en las dos líneas',
+      '[clavos, tornillos] y luego [clavos, tornillos]',
+    ],
+    correctIndex: 0,
+    explanation:
+      'keySet() retorna un Set con las claves y values() una Collection con los valores. El LinkedHashMap conserva el orden de inserción, así que ambas vistas respetan el orden en que se cargaron los pares.',
+    source: SOURCE,
+    tags: ['Map', 'keySet', 'values'],
+  },
+  {
+    id: 'u12-q14',
+    unitId: 12,
+    type: 'code',
+    difficulty: 'intermedio',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime?',
+    code: `Map<String, Integer> m = new HashMap<>();
+m.put("a", 1);
+System.out.println(m.containsKey("a"));
+System.out.println(m.containsValue(1));
+System.out.println(m.containsKey("b"));`,
+    options: ['true, true y luego false', 'true, false y luego false', 'true, true y luego true', 'false, true y luego false'],
+    correctIndex: 0,
+    explanation:
+      'containsKey() devuelve true si el mapa contiene esa clave y containsValue() si contiene una o más claves asociadas a ese valor. La clave "b" nunca se cargó, así que la última consulta da false.',
+    source: SOURCE,
+    tags: ['Map'],
+  },
+  {
+    id: 'u12-q15',
+    unitId: 12,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Por qué conviene que la clave de un Map sea inmutable?',
+    options: [
+      'Porque funciona como identificador único y no debería cambiar en tiempo de ejecución.',
+      'Porque de lo contrario el mapa no admitiría más de una clave.',
+      'Porque las claves mutables ocupan más memoria.',
+      'Porque es la única forma de que el mapa quede ordenado.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo plantea así al describir la interfaz: la clave funciona como identificador único, y conviene que sea inmutable (final) de modo que no cambie en tiempo de ejecución.',
+    source: SOURCE,
+    tags: ['Map'],
+  },
+  {
+    id: 'u12-q16',
+    unitId: 12,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: '¿Cuál es la forma correcta de recorrer un Map accediendo a la clave y al valor a la vez?',
+    options: [
+      'Iterando sobre entrySet(), que devuelve el conjunto de pares clave-valor.',
+      'Iterando sobre values() y pidiéndole la clave a cada valor.',
+      'Recorriendo el mapa con un for por índice.',
+      'No se puede: hay que hacer dos recorridos separados.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El ejemplo del material recorre entrySet() con un Iterator y por cada Map.Entry pide getKey() y getValue(). keySet() y values() dan sólo una de las dos mitades.',
+    source: SOURCE,
+    tags: ['Map', 'entrySet'],
+  },
+  {
+    id: 'u12-q17',
+    unitId: 12,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: '¿Qué estructura usa internamente un TreeMap?',
+    options: [
+      'Un árbol binario de búsqueda balanceado, del tipo rojo-negro.',
+      'Una tabla de dispersión sin orden.',
+      'Una lista doblemente vinculada.',
+      'Un arreglo redimensionable ordenado por clave.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Ésa es la implementación que describe el material, y es lo que le permite mantener las entradas ordenadas de forma ascendente según las claves, con un costo logarítmico en las operaciones básicas.',
+    source: SOURCE,
+    tags: ['TreeMap'],
+  },
+  {
+    id: 'u12-q18',
+    unitId: 12,
+    type: 'mc',
+    difficulty: 'avanzado',
+    prompt: '¿Qué devuelve el método ceilingKey() de un TreeMap?',
+    options: [
+      'La menor clave que sea mayor o igual a la pasada por parámetro, o null si no existe.',
+      'La menor clave estrictamente mayor a la pasada por parámetro.',
+      'La primera clave del mapa.',
+      'La cantidad de claves mayores a la indicada.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'La diferencia con higherKey() está en el "o igual": ceilingKey() incluye la clave del parámetro si existe, mientras que higherKey() devuelve la menor clave estrictamente mayor.',
+    source: SOURCE,
+    tags: ['TreeMap'],
+  },
+  {
+    id: 'u12-q19',
+    unitId: 12,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt:
+      'Se necesitan pares clave-valor que se recorran en el mismo orden en que fueron agregados. ¿Cuál corresponde?',
+    options: ['LinkedHashMap', 'HashMap', 'TreeMap', 'HashSet'],
+    correctIndex: 0,
+    explanation:
+      'Según la matriz de decisión del material, el LinkedHashMap mantiene el orden de inserción mediante una lista enlazada interna. El TreeMap ordena por clave y el HashMap no garantiza orden alguno.',
+    source: SOURCE,
+    tags: ['LinkedHashMap', 'Decisión'],
+  },
+  {
+    id: 'u12-q20',
+    unitId: 12,
+    type: 'vf',
+    difficulty: 'intermedio',
+    prompt: 'De las tres implementaciones de Map que vimos, el HashMap es la más eficiente en las operaciones estándar.',
+    answer: true,
+    explanation:
+      'El material lo afirma al comparar las tres: el HashMap es el más eficiente, pero el TreeMap tiene la ventaja de ser el único ordenado, a costa de un coste logarítmico.',
+    source: SOURCE,
+    tags: ['HashMap', 'TreeMap'],
+  },
+  {
+    id: 'u12-q21',
+    unitId: 12,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime la última línea?',
+    code: `Map<String, Integer> conteo = new HashMap<>();
+String[] palabras = {"sol", "mar", "sol"};
+
+for (String p : palabras) {
+    conteo.put(p, conteo.getOrDefault(p, 0) + 1);
+}
+
+System.out.println(conteo.get("sol"));`,
+    options: ['2', '1', '3', 'null'],
+    correctIndex: 0,
+    explanation:
+      'getOrDefault() devuelve el valor asociado a la clave, o el valor por omisión cuando la clave todavía no está. En la primera vuelta "sol" no existe y se guarda 1; en la tercera ya vale 1 y se guarda 2, porque put reemplaza el valor anterior.',
+    source: SOURCE,
+    tags: ['Map', 'HashMap'],
+  },
 ]

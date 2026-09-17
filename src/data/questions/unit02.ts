@@ -206,4 +206,272 @@ System.out.println(Math.sqrt(16));`,
     source: SOURCE,
     tags: ['Encapsulamiento', 'Getters y setters'],
   },
+  {
+    id: 'u02-q13',
+    unitId: 2,
+    type: 'vf',
+    difficulty: 'basico',
+    prompt: 'La Programación Orientada a Objetos es un lenguaje de programación.',
+    answer: false,
+    explanation:
+      'El material lo aclara de entrada: la POO NO es un lenguaje ni una IDE. Es una forma de ver las cosas, de entender un problema identificando las entidades principales que aparecen en él.',
+    source: SOURCE,
+    tags: ['POO'],
+  },
+  {
+    id: 'u02-q14',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Cuál de estas definiciones corresponde a la ABSTRACCIÓN?',
+    options: [
+      'Seleccionar las características relevantes de un conjunto, ignorando los detalles menos importantes, para definir nuevos tipos de entidades.',
+      'Restringir el acceso directo a los componentes de una clase mediante modificadores de acceso.',
+      'Que las clases se relacionen formando una jerarquía de clasificación y compartan comportamiento.',
+      'Que un mismo método tenga el mismo nombre pero un comportamiento diferente según el objeto.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'La abstracción permite trabajar con conceptos más generales e identificar comportamientos comunes. Es clave en el análisis y diseño orientado a objetos, porque con ella se llega al conjunto de clases que modela el problema.',
+    source: SOURCE,
+    tags: ['POO', 'Abstracción'],
+  },
+  {
+    id: 'u02-q15',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Cuál de estas definiciones corresponde al ENCAPSULAMIENTO?',
+    options: [
+      'Esconder los detalles de la puesta en práctica de un objeto y exponer sólo lo necesario para interactuar con él.',
+      'Representar un objeto en su forma más esencial y general.',
+      'Permitir que una subclase herede los atributos y métodos de una superclase.',
+      'Decidir en tiempo de ejecución cuál de varios métodos con el mismo nombre se ejecuta.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El encapsulamiento localiza los datos y el comportamiento en el núcleo del objeto, y permite restringir el acceso directo con modificadores. Así se reduce la complejidad, aumenta la seguridad y los detalles internos pueden cambiar sin afectar al resto del programa.',
+    source: SOURCE,
+    tags: ['POO', 'Encapsulamiento'],
+  },
+  {
+    id: 'u02-q16',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Cuál de estas definiciones corresponde a la HERENCIA?',
+    options: [
+      'Que los objetos hereden las propiedades y el comportamiento de las clases a las que pertenecen, formando una jerarquía.',
+      'Ocultar el estado de un objeto detrás de métodos públicos.',
+      'Ignorar los detalles de implementación para quedarse con lo esencial.',
+      'Que un método pueda recibir distintos tipos de parámetros.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Las clases no están aisladas: se relacionan formando una jerarquía de clasificación. La herencia permite definir objetos como tipos especializados de otros preexistentes, que comparten y extienden su comportamiento sin volver a implementarlo.',
+    source: SOURCE,
+    tags: ['POO', 'Herencia'],
+  },
+  {
+    id: 'u02-q17',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Cuál de estas definiciones corresponde al POLIMORFISMO?',
+    options: [
+      'Que un mismo método o acción pueda tener el mismo nombre pero un comportamiento diferente para el mismo o distintos objetos.',
+      'Que una clase pueda tener varios atributos del mismo tipo.',
+      'Que los atributos privados sólo sean accesibles desde la propia clase.',
+      'Que las clases se agrupen en paquetes según su responsabilidad.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material define el polimorfismo por el nombre compartido y el comportamiento distinto. Los métodos se diferencian por la cantidad y el tipo de parámetros de entrada, mientras que el nombre y el retorno se mantienen.',
+    source: SOURCE,
+    tags: ['POO', 'Polimorfismo'],
+  },
+  {
+    id: 'u02-q18',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'basico',
+    prompt: 'En la notación de atributos de UML, ¿qué visibilidad representa el símbolo #?',
+    options: ['protected', 'private', 'public', 'default'],
+    correctIndex: 0,
+    explanation:
+      'La notación que usa el material es: + para public, - para private, # para protected y ~ para default.',
+    source: SOURCE,
+    tags: ['UML', 'Modificadores de acceso'],
+  },
+  {
+    id: 'u02-q19',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'basico',
+    prompt: 'En la notación de atributos de UML, ¿qué visibilidad representa el símbolo -?',
+    options: ['private', 'protected', 'public', 'default'],
+    correctIndex: 0,
+    explanation:
+      'El guión corresponde a private. El + es public, el # es protected y el ~ es default.',
+    source: SOURCE,
+    tags: ['UML', 'Modificadores de acceso'],
+  },
+  {
+    id: 'u02-q20',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: '¿Qué relación entre objetos se valida con la frase "usa un"?',
+    options: ['Asociación', 'Composición', 'Herencia', 'Agregación'],
+    correctIndex: 0,
+    explanation:
+      'La asociación es la relación por la cual dos objetos se unen para trabajar juntos, y es la más común. Se valida con "usa un" y se dibuja con una línea simple. La agregación y la composición usan "tiene un", y la herencia "es un".',
+    source: SOURCE,
+    tags: ['UML', 'Relaciones'],
+  },
+  {
+    id: 'u02-q21',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt:
+      '¿Qué relación se dibuja con una línea punteada terminada en una flecha hacia la clase de la que se depende?',
+    options: ['Dependencia', 'Asociación', 'Agregación', 'Herencia'],
+    correctIndex: 0,
+    explanation:
+      'La dependencia se da cuando una clase necesita de otra de manera temporal o para un propósito específico. Se identifica preguntando si una clase "necesita" a otra para realizar una acción.',
+    source: SOURCE,
+    tags: ['UML', 'Relaciones'],
+  },
+  {
+    id: 'u02-q22',
+    unitId: 2,
+    type: 'vf',
+    difficulty: 'intermedio',
+    prompt: 'En una relación de agregación, la clase contenida puede existir de manera independiente.',
+    answer: true,
+    explanation:
+      'Ésa es justamente la diferencia con la composición: en la agregación las partes pueden existir independientemente y el diamante se dibuja hueco, mientras que en la composición la parte no puede existir sin el todo y el diamante va relleno.',
+    source: SOURCE,
+    tags: ['UML', 'Relaciones'],
+  },
+  {
+    id: 'u02-q23',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: 'Según el material, ¿qué se almacena en la zona de datos que maneja la JVM?',
+    options: [
+      'Las instrucciones del programa, las clases con sus métodos y las constantes; no se puede modificar en tiempo de ejecución.',
+      'Los objetos creados con el operador new.',
+      'Únicamente las variables locales de cada método.',
+      'Los objetos que el Garbage Collector marcó para eliminar.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material distingue tres zonas: la de datos con las instrucciones, clases y constantes; el Stack, cuyo tamaño se define en compilación; y el Heap, la zona de memoria dinámica donde se almacenan los objetos que se crean.',
+    source: SOURCE,
+    tags: ['Memoria', 'Heap y Stack'],
+  },
+  {
+    id: 'u02-q24',
+    unitId: 2,
+    type: 'code',
+    difficulty: 'avanzado',
+    prompt: 'Analizá el siguiente código. ¿Qué imprime la última línea?',
+    code: `public class Punto {
+    private int x;
+    private int y;
+
+    public Punto() {
+        this.x = 0;
+        this.y = 0;
+    }
+
+    public Punto(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+}
+
+// En el main:
+Punto p = new Punto();
+System.out.println(p.getX());`,
+    options: [
+      '0, porque se invoca el constructor sin parámetros.',
+      'No compila: una clase no puede tener dos constructores.',
+      'null, porque el constructor sin parámetros no inicializa nada.',
+      'Un valor indefinido, distinto en cada ejecución.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'Es una sobrecarga de constructores: dos constructores con el mismo nombre y distinta lista de parámetros. Como se invoca con new Punto() sin argumentos, se ejecuta el primero, que deja ambos atributos en 0.',
+    source: SOURCE,
+    tags: ['Constructores', 'Sobrecarga'],
+  },
+  {
+    id: 'u02-q25',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'basico',
+    prompt: '¿Qué devuelve Math.random()?',
+    options: [
+      'Un número aleatorio entre 0 y 1.',
+      'Un entero aleatorio entre 1 y 100.',
+      'Un entero aleatorio dentro del rango que se le pase por parámetro.',
+      'Un booleano aleatorio.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material la presenta así: Math.random() devuelve un número aleatorio entre 0 y 1. Para llevarlo a otro rango hay que multiplicarlo y ajustarlo.',
+    source: SOURCE,
+    tags: ['Math'],
+  },
+  {
+    id: 'u02-q26',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'intermedio',
+    prompt: 'Al analizar el enunciado de un problema, ¿qué elemento del texto sugiere un atributo?',
+    options: ['Los adjetivos', 'Los sustantivos', 'Los verbos', 'Los pronombres'],
+    correctIndex: 0,
+    explanation:
+      'La guía del material asocia sustantivos con clases, verbos con métodos y adjetivos con atributos. El ejemplo que da es "pedido urgente": el adjetivo sugiere que la clase Pedido podría tener un atributo que indique la urgencia.',
+    source: SOURCE,
+    tags: ['Diseño de clases'],
+  },
+  {
+    id: 'u02-q27',
+    unitId: 2,
+    type: 'vf',
+    difficulty: 'intermedio',
+    prompt: 'Todos los sustantivos que aparecen en el análisis de un problema deben convertirse en clases.',
+    answer: false,
+    explanation:
+      'El material advierte lo contrario: no todos los sustantivos son clases. Algunos se representan mejor como atributos de otras clases, y no toda entidad mencionada necesita modelarse como clase en el diseño final.',
+    source: SOURCE,
+    tags: ['Diseño de clases'],
+  },
+  {
+    id: 'u02-q28',
+    unitId: 2,
+    type: 'mc',
+    difficulty: 'basico',
+    prompt: '¿Qué es el estado de un objeto?',
+    options: [
+      'El valor que tienen sus atributos en un momento dado.',
+      'La cantidad de métodos que la clase define.',
+      'La posición de memoria donde fue creado.',
+      'El nombre de la clase de la que es instancia.',
+    ],
+    correctIndex: 0,
+    explanation:
+      'El material lo ejemplifica con tres objetos Lapiz que comparten la clase pero difieren en el color: el estado es el valor que toman los atributos de cada objeto.',
+    source: SOURCE,
+    tags: ['POO', 'Objetos'],
+  },
 ]
